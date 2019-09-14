@@ -19,10 +19,8 @@
 import os
 import re
 import sys
-import gtk
 import cgi
 import subprocess
-import gobject
 import o365_api
 import oauth2
 import stream_logging
@@ -30,6 +28,13 @@ import socket
 import warnings
 from blink import ScrollBlink
 from ConfigParser import ConfigParser
+
+# Enables a PyGTK compatible API on top of the Gtk 3.0 typelib (since 'gtk'
+# is not avilable in Python 3, only PyGObject & gi mdule, etc.)
+from gi import pygtkcompat
+pygtkcompat.enable()
+pygtkcompat.enable_gtk(version='3.0')
+
 
 # Get the path where the checker has been installed
 OWA_CHECKER_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))

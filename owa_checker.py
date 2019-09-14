@@ -28,7 +28,7 @@ import oauth2
 import stream_logging
 from datetime import datetime, timedelta
 from pytz import timezone
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 from status_icon import OWAConfig, OWAErrorDialog, CONFIG_FILE_DIR
 
 # Get the path where the checker has been installed

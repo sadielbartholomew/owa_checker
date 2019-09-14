@@ -22,7 +22,7 @@ import time
 import requests
 import o365_api
 import re
-from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
 # Client ID and secret
 CLIENT_ID = os.environ.get("OWA_CHECKER_CLIENT_ID", None)
@@ -85,7 +85,7 @@ def get_signin_url():
               'scope': ' '.join(str(i) for i in SCOPES)
               }
 
-    signin_url = AUTHORIZE_URL.format(urllib.urlencode(params))
+    signin_url = AUTHORIZE_URL.format(urllib.parse.urlencode(params))
 
     return signin_url
 
@@ -228,7 +228,7 @@ class LoginHTTPHandler(BaseHTTPRequestHandler):
             # email address from their contact details
             user = o365_api.get_user_info(get_access_token())
 
-            if type(user) is not dict:
+            if not isinstance(user, dict):
                 self._display()
                 self.wfile.write(
                     "<html><body><h1>Error Signing in!</h1></body></html>")
@@ -261,14 +261,14 @@ def run(server_class=HTTPServer, handler_class=LoginHTTPHandler):
 
 
 if __name__ == "__main__":
-    print "Starting Server... please navigate to: " + REDIRECT_URI
+    print("Starting Server... please navigate to: ", REDIRECT_URI)
     run()
     if OWACHECKER_SESSION["access_token"] is not "":
-        print "Successfully signed in!"
-        print "You can now re-run without the --auth argument"
-        print "to launch the checker. Note that if your desktop"
-        print "password changes, or your token expires for some"
-        print "other reason you will need to re-run the"
-        print "authentication process"
+        print("Successfully signed in!")
+        print("You can now re-run without the --auth argument")
+        print("to launch the checker. Note that if your desktop")
+        print("password changes, or your token expires for some")
+        print("other reason you will need to re-run the")
+        print("authentication process")
     else:
-        print "Failed to sign in..."
+        print("Failed to sign in...")

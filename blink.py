@@ -17,10 +17,13 @@
 # If not, see <http://opensource.org/licenses/BSD-3-Clause>                   #
 # ----------------------------------------------------------------------------#
 import sys
-import gtk
-import gobject
 import subprocess
 
+# Enables a PyGTK compatible API on top of the Gtk 3.0 typelib (since 'gtk'
+# is not avilable in Python 3, only PyGObject & gi mdule, etc.)
+from gi import pygtkcompat
+pygtkcompat.enable()
+pygtkcompat.enable_gtk(version='3.0')
 
 class ScrollBlink(object):
     """
